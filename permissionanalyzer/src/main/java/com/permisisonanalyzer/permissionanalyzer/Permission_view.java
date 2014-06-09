@@ -44,7 +44,7 @@ public class Permission_view extends Activity {
                 try {
                     PackageInfo pkgInfo = pm.getPackageInfo(appInfo.packageName, PackageManager.GET_PERMISSIONS);
                     String[] requested_permission = pkgInfo.requestedPermissions;
-                    if ( dangerous_permission(requested_permission) == true) {
+                    if ( dangerous_permission(requested_permission)) {
                         // found an application with dangerous permission
                         valori.add( appInfo.loadLabel(pm).toString() );     // add application name in valori
                     }
