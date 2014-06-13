@@ -1,4 +1,4 @@
-package com.tabexample.app;
+package com.tabexample.permissionanalyzer;
 
 
 
@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import com.tabexample.app.R;
 
 import java.util.ArrayList;
 import java.util.List;

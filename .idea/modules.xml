@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/PermissionAnalyzer.iml" filepath="$PROJECT_DIR$/PermissionAnalyzer.iml" />
-      <module fileurl="file://$PROJECT_DIR$/permissionanalyzer/permissionanalyzer.iml" filepath="$PROJECT_DIR$/permissionanalyzer/permissionanalyzer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
 </project>

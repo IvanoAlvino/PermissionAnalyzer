@@ -1,4 +1,4 @@
-package com.tabexample.app;
+package com.tabexample.permissionanalyzer;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+
+import com.tabexample.app.R;
 
 
 public class TabExample extends FragmentActivity implements ActionBar.TabListener {

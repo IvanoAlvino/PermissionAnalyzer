@@ -1,4 +1,4 @@
-package com.tabexample.app;
+package com.tabexample.permissionanalyzer;
 
 
 
@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.tabexample.app.R;
 
 
 /**
