@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.Menu;
+import android.view.MenuInflater;
 
 import com.tabexample.app.R;
 
@@ -48,17 +50,24 @@ public class TabExample extends FragmentActivity implements ActionBar.TabListene
 
         // create TAB 1
         ActionBar.Tab list_tab = actionBar.newTab();
-        list_tab.setText("Scary Apps");
+        list_tab.setText(R.string.scary_app);
         list_tab.setTabListener(this);
 
         // create TAB 2
         ActionBar.Tab map_tab = actionBar.newTab();
-        map_tab.setText("Safe Apps");
+        map_tab.setText(R.string.safe_app);
         map_tab.setTabListener(this);
 
         // add TABS to actionBar
         actionBar.addTab(list_tab);
         actionBar.addTab(map_tab);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.tab_example, menu);
+        return true;
     }
 
     @Override
@@ -98,3 +107,5 @@ class MyPageAdapter extends FragmentPagerAdapter {
         return 2;
     }
 }
+
+
