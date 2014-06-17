@@ -26,6 +26,7 @@ public class Permission_view extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_permission_view);
+
         // Definitions
         PackageManager pm = getPackageManager();
         ArrayList<String> valori = new ArrayList<String>();
