@@ -3,7 +3,7 @@
 
     <string name="app_name">Permission Explorer</string>
     <string name="action_settings">Réglages</string>
-    <string name="safe_app">applications sécurisées</string>
-    <string name="scary_app">app dangereuses</string>
+    <string name="permission">Autorisations</string>
+    <string name="scary_app">App dangereuses</string>
 
 </resources>

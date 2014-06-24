@@ -18,6 +18,7 @@ public class TabExample extends FragmentActivity implements ActionBar.TabListene
 
     ViewPager viewPager;
     ActionBar actionBar;
+    FragmentManager fm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,11 +27,11 @@ public class TabExample extends FragmentActivity implements ActionBar.TabListene
 
         // get the ViewPager handle
         viewPager = (ViewPager) findViewById(R.id.pager);
-        viewPager.setAdapter(new MyPageAdapter(getSupportFragmentManager()));
+        fm = getSupportFragmentManager();
+        viewPager.setAdapter(new MyPageAdapter(fm));
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
             }
 
             @Override
@@ -55,7 +56,7 @@ public class TabExample extends FragmentActivity implements ActionBar.TabListene
 
         // create TAB 2
         ActionBar.Tab map_tab = actionBar.newTab();
-        map_tab.setText(R.string.safe_app);
+        map_tab.setText(R.string.permission);
         map_tab.setTabListener(this);
 
         // add TABS to actionBar
@@ -96,7 +97,7 @@ class MyPageAdapter extends FragmentPagerAdapter {
         switch (position) {
             case 0: fragment = new ScaryAppFragment();
                 break;
-            case 1: fragment = new SafeAppFragment();
+            case 1: fragment = new PermissionFragment();
                 break;
         }
         return fragment;

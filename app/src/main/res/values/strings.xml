@@ -3,7 +3,7 @@
 
     <string name="app_name">Permission Explorer</string>
     <string name="action_settings">Settings</string>
-    <string name="safe_app">Safe App</string>
+    <string name="permission">Permission</string>
     <string name="scary_app">Scary App</string>
 
 </resources>

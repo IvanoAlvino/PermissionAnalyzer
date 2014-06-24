@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Permission Explorer</string>
     <string name="action_settings">Ajustes</string>
-    <string name="safe_app">App Seguras</string>
+    <string name="permission">Permisos</string>
     <string name="scary_app">App Peligrosas</string>
     <string name="txtCredits"><a href="http://www.google.com">Google</a></string>
 </resources>

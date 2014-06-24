@@ -2,6 +2,6 @@
 <resources>
     <string name="app_name">Permission Explorer</string>
     <string name="action_settings">Impostazioni</string>
-    <string name="safe_app">App Sicure</string>
+    <string name="permission">Permessi</string>
     <string name="scary_app">App Pericolose</string>
 </resources>
