@@ -67,7 +67,7 @@ public class TabExample extends FragmentActivity implements ActionBar.TabListene
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.tab_example, menu);
+        inflater.inflate(R.menu.context_menu, menu);
         return true;
     }
 
@@ -96,6 +96,7 @@ class MyPageAdapter extends FragmentPagerAdapter {
         Fragment fragment = null;
         switch (position) {
             case 0: fragment = new ScaryAppFragment();
+
                 break;
             case 1: fragment = new PermissionFragment();
                 break;

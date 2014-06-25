@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Permission Explorer</string>
-    <string name="action_settings">Impostazioni</string>
     <string name="permission">Permessi</string>
+    <string name="more_info">Più informazioni</string>
     <string name="scary_app">App Pericolose</string>
 </resources>
