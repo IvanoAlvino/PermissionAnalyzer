@@ -14,12 +14,6 @@
         revision="19.1.0"
         sha1="3499ceba05ca1f6037c6a2fad73df8f636224a28"/>
     <item
-        dex="/Users/ivano/GitHub_Repositories/PermissionAnalyzer/app/build/intermediates/pre-dexed/debug/acra-4.5.0-f51626b9f2f01a7ad2052015af39e4f9cac5b48b.jar"
-        jar="/Users/ivano/GitHub_Repositories/PermissionAnalyzer/app/libs/acra-4.5.0.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="44a5eb946e0d83eed4a0128d877ca1fd8168b83a"/>
-    <item
         dex="/Users/ivano/GitHub_Repositories/SwypeTabExample/app/build/intermediates/pre-dexed/debug/classes-f3fc9d86f3cc62824a6a79246f019c6a31e13510.jar"
         jar="/Users/ivano/GitHub_Repositories/SwypeTabExample/build/intermediates/exploded-aar/com.android.support/appcompat-v7/19.1.0/classes.jar"
         jumboMode="false"

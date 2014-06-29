@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
@@ -37,10 +36,6 @@ public class PermissionFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        /* HYPERLINK
-        TextView t2 = (TextView) getActivity().findViewById(R.id.infoTxtCredits);
-        t2.setMovementMethod(LinkMovementMethod.getInstance());
-        */
 
         // Definitions
         final ArrayList<String> permissions = new ArrayList<String>();
