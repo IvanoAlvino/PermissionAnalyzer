@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Permission Explorer</string>
+    <string name="app_name">Permission Analyzer</string>
     <string name="more_info">Mas informaciones</string>
     <string name="permission">Permisos</string>
     <string name="scary_app">App Peligrosas</string>
