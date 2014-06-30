@@ -146,8 +146,6 @@ public class TabExample extends FragmentActivity implements ActionBar.TabListene
 }
 
 
-
-
     /*
         MY PAGE ADAPTER CLASS
         A class which works as a Adapter to
@@ -175,7 +173,7 @@ class MyPageAdapter extends FragmentPagerAdapter {
                     fragment.setArguments(bundle);
                 break;
             case 1: fragment = new PermissionFragment();
-                    bundle.putSerializable("apps", dangerousApps);
+                    bundle.putSerializable("dangerousApps", dangerousApps);
                     fragment.setArguments(bundle);
                 break;
         }

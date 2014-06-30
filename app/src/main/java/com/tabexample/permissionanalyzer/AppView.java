@@ -9,6 +9,8 @@ import com.tabexample.app.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 
 /**
  * Created by ivano on 30/06/14.
@@ -23,6 +25,7 @@ public class AppView extends Activity {
 
         // retrieve the app list
         ArrayList<String> appsList = (ArrayList<String>) getIntent().getExtras().getSerializable("apps");
+        Collections.sort(appsList);
 
         // if list is empty, add a standard message
         if ( appsList.size() == 0 ) {

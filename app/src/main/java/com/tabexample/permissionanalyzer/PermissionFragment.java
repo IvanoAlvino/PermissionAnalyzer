@@ -37,6 +37,8 @@ public class PermissionFragment extends Fragment {
             "android.permission.WRITE_SECURE_SETTINGS", "android.permission.PROCESS_OUTGOING_CALLS",
             "android.permission.SEND_SMS", "android.permission.READ_SOCIAL_STREAM"};
 
+    ArrayList<ApplicationInfo> dangerousApps = new ArrayList<ApplicationInfo>();
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -44,6 +46,10 @@ public class PermissionFragment extends Fragment {
         // Definitions
         final ArrayList<String> permissions = new ArrayList<String>();
         final ListView listview = (ListView) getActivity().findViewById(R.id.list_permissions);
+        final ArrayList<String> valori = new ArrayList<String>();
+
+        // Getting the bundle
+        dangerousApps = (ArrayList<ApplicationInfo>) getArguments().getSerializable("dangerousApps");
 
         // setting the adapter to the listview
         ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, permissions);
@@ -59,37 +65,32 @@ public class PermissionFragment extends Fragment {
 
         // set the onClick listener to the listView
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            /* if I click on a permission, show all the app that uses that permission */
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                /* if I click on a permission, show all the app that uses that permission */
                 // get the complete name of permission clicked
                 String permission = badPermissions[position];
-                // now, search every app that uses this permission
-
-                // Retrieve all applications installed
                 PackageManager pm = getActivity().getPackageManager();
-                ArrayList<String> valori = new ArrayList<String>();
-                int flags = PackageManager.GET_META_DATA |
-                        PackageManager.GET_SHARED_LIBRARY_FILES |
-                        PackageManager.GET_UNINSTALLED_PACKAGES;
-                final List<ApplicationInfo> installed_packages = pm.getInstalledApplications(flags);
+                valori.clear();
 
-                for ( ApplicationInfo appInfo : installed_packages ) {
-                    // Select only the application installed by user
-                    if ( (appInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0 ) {
-                        // check if possess the permission
-                        try {
-                            PackageInfo pkgInfo = pm.getPackageInfo(appInfo.packageName, PackageManager.GET_PERMISSIONS);
-                            String[] requested_permission = pkgInfo.requestedPermissions;
-                            if ( dangerous_permission(requested_permission, permission)) {
-                                // found an application with dangerous permission
-                                valori.add( appInfo.loadLabel(pm).toString() );     // add application name in valori
-                            }
-                        } catch (PackageManager.NameNotFoundException e) {
-                            e.printStackTrace();
+                // now, search every app that uses this permission
+                for (int i=0; i < dangerousApps.size(); i++ ) {
+                    ApplicationInfo appInfo = dangerousApps.get(i);
+                    // retrieve the permissions of this app
+                    PackageInfo pkgInfo = null;
+                    try {
+                        pkgInfo = pm.getPackageInfo(appInfo.packageName, PackageManager.GET_PERMISSIONS);
+                        String[] requested_permission = pkgInfo.requestedPermissions;
+                        if ( uses_permission(requested_permission, permission) ) {
+                            // app uses the permission
+                            valori.add(appInfo.loadLabel(pm).toString());
                         }
+                    } catch (PackageManager.NameNotFoundException e) {
+                        e.printStackTrace();
                     }
                 }
+
                 /* Now in valori I got all the app that use this permission
                        Calling a new activity which will display the results into a ListView */
 
@@ -105,7 +106,7 @@ public class PermissionFragment extends Fragment {
         });
     }
 
-    private boolean dangerous_permission(String[] req_permissions, String permission) {
+    private boolean uses_permission(String[] req_permissions, String permission) {
         boolean found = false;
 
         if ( req_permissions != null ) {

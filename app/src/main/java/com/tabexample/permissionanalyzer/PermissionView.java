@@ -16,6 +16,7 @@ import com.tabexample.app.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 
 /**
@@ -31,14 +32,18 @@ public class PermissionView extends Activity {
         ListView listview = (ListView) findViewById(R.id.list_permissions);
 
         // retrieve the permission list
-        String[] pl = getIntent().getExtras().getStringArray("permissions");
-        ArrayList permissionList = new ArrayList( Arrays.asList(pl));
+        ArrayList<String> pl = (ArrayList<String>) getIntent().getExtras().getSerializable("permissions");
+        ArrayList<String> permissionList = new ArrayList<String>();
 
         // cutting first part of string, for increased readibility
-        for ( int i=0; i<permissionList.size(); i++) {
-            String a = (String) permissionList.get(i);
+        for ( int i=0; i < pl.size(); i++) {
+            permissionList.add(pl.get(i).substring(19));
          }
 
+        // sorting the array
+        Collections.sort(permissionList);
+
+        // setting the adapter
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, permissionList);
         listview.setAdapter(adapter);
         // set the context menu for longclick

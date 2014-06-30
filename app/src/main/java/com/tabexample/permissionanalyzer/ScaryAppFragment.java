@@ -20,6 +20,7 @@ import com.tabexample.app.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 
 /**
@@ -49,6 +50,9 @@ public class ScaryAppFragment extends Fragment {
         appNameList = (ArrayList<String>) getArguments().getSerializable("appNameList");
         dangerousApps = (ArrayList<ApplicationInfo>) getArguments().getSerializable("dangerousApps");
 
+        // sorting appNameList
+        Collections.sort(appNameList);
+
         // Create the display of the list throught a standard adapter
         final ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, appNameList);
         listview.setAdapter(adapter);
@@ -68,14 +72,21 @@ public class ScaryAppFragment extends Fragment {
                     // creating array with all permission
                     PackageInfo pkgInfo = pm.getPackageInfo(app.packageName, PackageManager.GET_PERMISSIONS);
                     String[] requested_permission = pkgInfo.requestedPermissions;
-                    Arrays.sort(requested_permission);
+
+                    // removing all third part permissions
+                    ArrayList<String> permissionList = new ArrayList( Arrays.asList(requested_permission));
+                    for (int i=0; i < permissionList.size(); i++ ) {
+                        if ( permissionList.get(i).contains("android.permission") == false) {
+                            permissionList.remove(i);
+                        }
+                    }
 
                     /* Now in requested_permission I got all the permissions this app needs
                        Calling a new activity which will display the results into a ListView */
 
                     // passing the requested_permission array to new activity
                     Bundle bundle = new Bundle();
-                    bundle.putStringArray("permissions", requested_permission);
+                    bundle.putSerializable("permissions", permissionList);
 
                     // calling new activity
                     Intent i = new Intent(getActivity(), PermissionView.class);
