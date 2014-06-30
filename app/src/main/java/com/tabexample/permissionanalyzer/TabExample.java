@@ -2,6 +2,9 @@ package com.tabexample.permissionanalyzer;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -13,22 +16,68 @@ import android.view.MenuInflater;
 
 import com.tabexample.app.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class TabExample extends FragmentActivity implements ActionBar.TabListener {
 
     ViewPager viewPager;
     ActionBar actionBar;
-    FragmentManager fm;
+    String[] badPermissions = new String[]{"android.permission.INTERNET", "android.permission.AUTHENTICATE_ACCOUNTS",
+            "android.permission.READ_CALL_LOG", "android.permission.READ_LOGS", "android.permission.READ_CONTACTS",
+            "android.permission.WRITE_SECURE_SETTINGS", "android.permission.PROCESS_OUTGOING_CALLS",
+            "android.permission.SEND_SMS", "android.permission.READ_SOCIAL_STREAM"};
+    ArrayList<ApplicationInfo> dangerousApps = new ArrayList<ApplicationInfo>();
+    ArrayList<String> appNameList = new ArrayList<String>();
+    FragmentManager fm = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tab_example);
 
+        /*
+            Collect informations about application installed
+        */
+
+        // Definitions
+        PackageManager pm = getPackageManager();
+
+        // Retrieve all the application installed
+        int flags = PackageManager.GET_META_DATA |
+                PackageManager.GET_SHARED_LIBRARY_FILES |
+                PackageManager.GET_UNINSTALLED_PACKAGES;
+        final List<ApplicationInfo> installed_packages = pm.getInstalledApplications(flags);
+
+        // Filter all application selecting only application installed by user
+        for (ApplicationInfo appInfo : installed_packages) {
+            if ((appInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
+                // Check if possess a dangerous permission
+                try {
+                    PackageInfo pkgInfo = pm.getPackageInfo(appInfo.packageName, PackageManager.GET_PERMISSIONS);
+                    String[] requested_permission = pkgInfo.requestedPermissions;
+                    if (dangerous_permission(requested_permission)) {
+                        // Found an application with dangerous permission
+                        dangerousApps.add(appInfo);
+                        appNameList.add(appInfo.loadLabel(pm).toString());     // add application name in valori
+                    }
+                } catch (PackageManager.NameNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        /*
+            Here we got:
+               * dangerousApps = an array with all the user installed application whit dangerous permissions
+               * appNameList = a String Array with all the names of the dangerous App
+         */
+
         // get the ViewPager handle
         viewPager = (ViewPager) findViewById(R.id.pager);
         fm = getSupportFragmentManager();
-        viewPager.setAdapter(new MyPageAdapter(fm));
+        viewPager.setAdapter(new MyPageAdapter(fm, dangerousApps, appNameList));
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -62,6 +111,7 @@ public class TabExample extends FragmentActivity implements ActionBar.TabListene
         // add TABS to actionBar
         actionBar.addTab(list_tab);
         actionBar.addTab(map_tab);
+
     }
 
     @Override
@@ -83,22 +133,50 @@ public class TabExample extends FragmentActivity implements ActionBar.TabListene
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
     }
+
+    private boolean dangerous_permission(String[] req_permissions) {
+        boolean found = false;
+        if (req_permissions != null)
+            for (int i = 0; i < req_permissions.length && !found; i++)
+                for (int j = 0; j < badPermissions.length && !found; j++)
+                    if (req_permissions[i].equals(badPermissions[j]))
+                        found = true;
+        return found;
+    }
 }
 
+
+
+
+    /*
+        MY PAGE ADAPTER CLASS
+        A class which works as a Adapter to
+        retrieve a fragment when user clicks on the actionbar tab
+     */
 class MyPageAdapter extends FragmentPagerAdapter {
 
-    MyPageAdapter(FragmentManager fm) {
+    ArrayList<ApplicationInfo> dangerousApps;
+    ArrayList<String> appNameList;
+
+    MyPageAdapter(FragmentManager fm, ArrayList<ApplicationInfo> dApp, ArrayList<String> appNames) {
         super(fm);
+        dangerousApps = dApp;
+        appNameList = appNames;
     }
 
     @Override
     public Fragment getItem(int position) {
         Fragment fragment = null;
+        Bundle bundle = new Bundle();
         switch (position) {
             case 0: fragment = new ScaryAppFragment();
-
+                    bundle.putSerializable("appNameList", appNameList);
+                    bundle.putSerializable("dangerousApps", dangerousApps);
+                    fragment.setArguments(bundle);
                 break;
             case 1: fragment = new PermissionFragment();
+                    bundle.putSerializable("apps", dangerousApps);
+                    fragment.setArguments(bundle);
                 break;
         }
         return fragment;
