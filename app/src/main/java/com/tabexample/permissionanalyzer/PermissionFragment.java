@@ -133,24 +133,25 @@ public class PermissionFragment extends Fragment {
 
         // when clicked a permission, send to the browser the hyperlink related
         Intent browserIntent = null;
+        String baseUrl = "http://androidmobileprogrammingugr.blogspot.com.es/2014/06/permisos-de-android.html";
         switch(info.position) {
-            case 0: browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"));
+            case 0: browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(baseUrl + "#internet"));
                 break;
-            case 1: browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.yahoo.com"));
+            case 1: browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(baseUrl + "#authenticate_accounts"));
                 break;
-            case 2: browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"));
+            case 2: browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(baseUrl + "#read_call_log"));
                 break;
-            case 3: browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"));
+            case 3: browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(baseUrl + "#read_logs"));
                 break;
-            case 4: browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"));
+            case 4: browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(baseUrl + "#read_contacts"));
                 break;
-            case 5: browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"));
+            case 5: browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(baseUrl + "#write_secure_setting"));
                 break;
-            case 6: browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"));
+            case 6: browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(baseUrl + "#process_outgoing_calls"));
                 break;
-            case 7: browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"));
+            case 7: browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(baseUrl + "#send_sms"));
                 break;
-            case 8: browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com"));
+            case 8: browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(baseUrl + "#read_social_stream"));
                 break;
         }
         startActivity(browserIntent);

@@ -1,7 +1,5 @@
 package com.tabexample.permissionanalyzer;
 
-
-
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.widget.AdapterView;
