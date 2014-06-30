@@ -6,5 +6,6 @@
     <string name="permission">Permission</string>
     <string name="scary_app">Scary App</string>
     <string name="perm_internet"><a href="http://androidmobileprogrammingugr.blogspot.com.es">Internet</a></string>
+    <string name="noApp">This permission is not used by any application</string>
 
 </resources>

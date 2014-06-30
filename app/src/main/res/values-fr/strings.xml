@@ -5,5 +5,6 @@
     <string name="more_info">Plus de informacion</string>
     <string name="permission">Autorisations</string>
     <string name="scary_app">App dangereuses</string>
+    <string name="noApp" />
 
 </resources>

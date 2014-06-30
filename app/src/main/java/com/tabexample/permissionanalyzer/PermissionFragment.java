@@ -3,6 +3,9 @@ package com.tabexample.permissionanalyzer;
 
 
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -19,6 +22,7 @@ import android.widget.ListView;
 import com.tabexample.app.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -39,7 +43,7 @@ public class PermissionFragment extends Fragment {
 
         // Definitions
         final ArrayList<String> permissions = new ArrayList<String>();
-        ListView listview = (ListView) getActivity().findViewById(R.id.list_permissions);
+        final ListView listview = (ListView) getActivity().findViewById(R.id.list_permissions);
 
         // setting the adapter to the listview
         ArrayAdapter adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, permissions);
@@ -52,6 +56,67 @@ public class PermissionFragment extends Fragment {
 
         // set the context menu for longclick
         registerForContextMenu(listview);
+
+        // set the onClick listener to the listView
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                /* if I click on a permission, show all the app that uses that permission */
+                // get the complete name of permission clicked
+                String permission = badPermissions[position];
+                // now, search every app that uses this permission
+
+                // Retrieve all applications installed
+                PackageManager pm = getActivity().getPackageManager();
+                ArrayList<String> valori = new ArrayList<String>();
+                int flags = PackageManager.GET_META_DATA |
+                        PackageManager.GET_SHARED_LIBRARY_FILES |
+                        PackageManager.GET_UNINSTALLED_PACKAGES;
+                final List<ApplicationInfo> installed_packages = pm.getInstalledApplications(flags);
+
+                for ( ApplicationInfo appInfo : installed_packages ) {
+                    // Select only the application installed by user
+                    if ( (appInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0 ) {
+                        // check if possess the permission
+                        try {
+                            PackageInfo pkgInfo = pm.getPackageInfo(appInfo.packageName, PackageManager.GET_PERMISSIONS);
+                            String[] requested_permission = pkgInfo.requestedPermissions;
+                            if ( dangerous_permission(requested_permission, permission)) {
+                                // found an application with dangerous permission
+                                valori.add( appInfo.loadLabel(pm).toString() );     // add application name in valori
+                            }
+                        } catch (PackageManager.NameNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                /* Now in valori I got all the app that use this permission
+                       Calling a new activity which will display the results into a ListView */
+
+                // passing the requested_permission array to new activity
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("apps", valori);
+
+                // calling new activity
+                Intent i = new Intent(getActivity(), AppView.class);
+                i.putExtras(bundle);
+                startActivity(i);
+            }
+        });
+    }
+
+    private boolean dangerous_permission(String[] req_permissions, String permission) {
+        boolean found = false;
+
+        if ( req_permissions != null ) {
+            for (int i = 0; i < req_permissions.length && !found; i++) {
+                if (req_permissions[i].equals(permission)) {
+                    found = true;
+                }
+            }
+        }
+
+        return found;
     }
 
     @Override

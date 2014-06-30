@@ -4,6 +4,7 @@
     <string name="more_info">Mas informaciones</string>
     <string name="permission">Permisos</string>
     <string name="scary_app">App Peligrosas</string>
+    <string name="noApp" />
 </resources>
 
 

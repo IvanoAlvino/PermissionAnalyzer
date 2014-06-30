@@ -19,6 +19,8 @@
 
         <activity
             android:name="com.tabexample.permissionanalyzer.PermissionView" />
+        <activity
+            android:name="com.tabexample.permissionanalyzer.AppView" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
