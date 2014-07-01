@@ -1,5 +1,5 @@
 Permission Analyzer
-************************************
+=========================
 
 Permission Analyzer is an application that helps you find about third-party applications that make use of “risky” permission of Android System.
 Permission Analyzer gives you important informations about your installed apps’ permissions, giving you hint about what are the “risky” permissions, their common use, and which app does use them.
@@ -25,9 +25,9 @@ Caracteristicas
 - Consejos de aplicaciones famosas que utilizan estos permisos
 - Traducion en 4 diferentes idiomas (Español, Ingles, Italiano, Frances )
 
-*********************************
+
           IMPORTANTE
-*********************************
+================================
 
     Como utilizar la aplicación
 -----------------------------------
